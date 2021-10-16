@@ -21,9 +21,10 @@
                     <table class="table table-responsive table-striped">
                         <thead>
                             <tr>
-                                <tr>NIM</th>
-                                <tr>Name</th>
+                                <th>NIM</th>
+                                <th>Name</th>
                                 <th>Class</th>
+                                <th>Action</th>
                             </tr>
                         </thead> 
                         <tbody>
@@ -32,6 +33,9 @@
                                 <td>{{$s->nim}}</td>
                                 <td>{{$s->name}}</td>
                                 <td>{{$s->class}}</td>
+                                <td>  
+                                <a href="/students/{{$s->id}}/edit" class="btn btn-warning">Edit</a>  
+                            </td>
                             </tr>    
                 @endforeach
             </tbody>
