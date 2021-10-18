@@ -42,6 +42,9 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('users.index') }}">{{ __('User Data') }}</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                                 </li>
                                 <li class="nav-item">
