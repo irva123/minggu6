@@ -46,8 +46,7 @@
                             <tr>
                               <td>{{ $s->nim }}</td>
                               <td>{{ $s->name }}</td>
-                              <td>{{ $s->class }}</td>
-                              <td>{{ $s->department }}</td>
+                              <td>{{ $s->kelas->class_name }}</td>
                               <td>
                                     <form action="/students/{{$s->id}}" method="post">
                                         <a href="/students/{{$s->id}}" class="btn btn-info">View</a>
