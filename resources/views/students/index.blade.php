@@ -37,7 +37,6 @@
                                 <th>NIM</th>
                                 <th>Name</th>
                                 <th>Class</th>
-                                <th>Department</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -54,6 +53,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                        <a href="/students/{{$s->id}}/detail" class="btn btn-success">Nilai</a>
                                     </form>
                                 </td>
                             </tr> 
