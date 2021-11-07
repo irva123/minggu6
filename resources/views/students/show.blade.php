@@ -13,6 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <img width="150px" src="{{asset('storage/'.$student->photo)}}"><br><br>
                     <div class="card-header">{{ $student->nim }}</div>
                      <div class="card-body">
                         Name : {{ $student->name }} <br>

@@ -31,7 +31,7 @@
                             <select class="form-control" name="Kelas">
                                     @foreach($kelas as $class)
                                     <option value="{{$class->id}}" {{ $student->class_id == $class->id ? "selected":"" }}> 
-                                    {{ $class->class_name}}
+                                    {{ $class->class_name}} 
                                     </option>
                                 @endforeach
                             </select></br>
@@ -45,7 +45,7 @@
                             <input type="text" class="form-control" required="required" name="phone_number" value="{{$student->phone_number}}"></br>
                         </div>
                         <button type="submit" name="edit" class="btn btn-primary float-right">Save Changes</button>
-                    </form>
+                    </form> 
                 </div>
             </div>
         </div>

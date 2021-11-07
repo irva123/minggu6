@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Student;
-use App\Models\Kelas;
+Use App\Models\Student;
+Use App\Models\Kelas;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class StudentController extends Controller
 {
@@ -15,8 +17,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::with('kelas')->get();
-        return view('students.index', ['student'=>$student]);       
+        $students = Student::with('kelas')->get();
+        return view('students.index',['student'=>$students]);
     }
 
     /**
@@ -39,21 +41,28 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $student = new Student;
+        if($request->file('photo')){ 
+            $image_name = $request->file('photo')->store('images','public'); 
+        }
+
         $student->nim = $request->nim;
         $student->name = $request->name;
         $student->department = $request->department;
         $student->phone_number = $request->phone_number;
+        $student->photo = $image_name;
 
         $kelas = new Kelas;
         $kelas->id = $request->Kelas;
 
         $student->kelas()->associate($kelas);
         $student->save();
-        
-        // if true, redirect to index
-        return redirect()->route('students.index')
-        ->with('success', 'Add data success!');
 
+        //add data
+        //Student::create($request->all());
+
+        //if true,redirect to index
+        return redirect()->route('students.index')
+            ->with('success','Add data success!');
     }
 
     /**
@@ -76,10 +85,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-    $student = Student::find($id);
-    $kelas = Kelas::all();
-    return view('students.edit',['student'=>$student, 
-    'kelas'=>$kelas]);
+        $student = Student::find($id);
+        $kelas = Kelas::all();
+        return view('students.edit',['student'=>$student, 'kelas'=>$kelas]);
     }
 
     /**
@@ -97,13 +105,20 @@ class StudentController extends Controller
         $student->department = $request->department;
         $student->phone_number = $request->phone_number;
         
+        if($student->photo && file_exists(storage_path('app/public/' . $student->photo))) 
+        { 
+            \Storage::delete('public/'.$student->photo); 
+        } 
+        $image_name = $request->file('photo')->store('images', 'public'); 
+        $student->photo = $image_name;
+
         $kelas = new Kelas;
         $kelas->id = $request->Kelas;
-        
+
         $student->kelas()->associate($kelas);
         $student->save();
         
-        return redirect()->route('students.index');   
+        return redirect()->route('students.index');
     }
 
     /**
@@ -114,19 +129,15 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student = Student::find($id);
+        $student  = Student::find($id);
         $student->delete();
         return redirect()->route('students.index');
     }
 
     public function search(Request $request)
-	{
-		// menangkap data pencarian
-		$keyword = $request->search;
-        $student = student::where('name','like',"%".$keyword."%")
-		->paginate(5);
- 
-    	// mengirim data pegawai ke view index
+    {
+        $keyword = $request->search;
+        $student = Student::where('name', 'like', "%" . $keyword . "%")->paginate(5);
         return view('students.index', compact('student'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
