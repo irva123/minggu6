@@ -42,9 +42,6 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('users.index') }}">{{ __('User Data') }}</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                                 </li>
                                 <li class="nav-item">
@@ -63,6 +60,11 @@
                             </li>
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('students.index') }}">{{ __('CRUD') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                @can('manage-users')
+                                <a class="nav-link" href="/users">User Data</a>
+                                @endcan
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
